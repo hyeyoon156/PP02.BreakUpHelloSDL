@@ -4,12 +4,12 @@ SDL_Window* g_pWindow = 0;
 SDL_Renderer* g_pRenderer = 0;
 
 void init() {}
-void render() {}
 void update() {}
 void handleEvents() {}
-void clean(){}
+void clean() {}
 
 bool g_bRunning = false;
+
 bool init(const char* title, int xpos, int ypos,
 	int width, int height, int flags)
 {
@@ -30,19 +30,31 @@ bool init(const char* title, int xpos, int ypos,
 
 void render()
 {
-	SDL_SetRenderDrawColor()
+	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
+	SDL_RenderClear(g_pRenderer);
+	SDL_RenderPresent(g_pRenderer);
 }
 
-int main()
+int main(int argc, char* srgv[])
 {
-	init();
+	if (init("Chapter 1 : Setting up SDL",
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		640, 480, SDL_WINDOW_SHOWN))
+	{
+		g_bRunning = true;
+	}
+	else
+	{
+		return 1;
+	}
 
 	while (g_bRunning)
 	{
-		handleEvents();
-		update();
 		render();
 	}
-	clean();
+
+	SDL_Quit();
+	return 0;
 
 }
